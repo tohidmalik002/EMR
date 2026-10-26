@@ -1,0 +1,7 @@
+# Everything under docker/ and every shell script runs inside Linux containers,
+# so it must stay LF even on a Windows checkout with core.autocrlf=true. A CRLF
+# entrypoint.sh crash-loops the frappe container with "/usr/bin/env: 'bash\r'".
+docker/**   text=auto eol=lf
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+Procfile    text eol=lf
