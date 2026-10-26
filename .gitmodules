@@ -30,10 +30,6 @@
 	path = WT/Workers_tab_web
 	url = https://github.com/8848digital/Workers_tab_web.git
 	branch = demo-luxury
-[submodule "WT/EMR_Catalog_Backend"]
-	path = WT/EMR_Catalog_Backend
-	url = https://github.com/8848digital/EMR_Catalog_Backend.git
-	branch = merge/workerstab-into-multidb
 [submodule "emr_node"]
 	path = new--emr/emr_node
 	url = https://github.com/8848digital/emr_node.git

@@ -262,6 +262,9 @@ services:
     working_dir: /app
     ports:
       - "${DC_BACKEND_PORT:-5001}:5001"
+      # Workers Tab runs on this same backend (dc_catalog_multidb carries wrkTab),
+      # so WT's registered back-channel port lands here too.
+      - "${WT_BACKEND_PORT:-5091}:5001"
     env_file:
       - ./DC/EMR_Catalog_Backend/.env
     environment:
@@ -341,23 +344,7 @@ services:
 
   # ═══ Workers Tab ══════════════════════════════════════════════════════════
 
-  wt-backend:
-    <<: [*node, *host-aliases]
-    working_dir: /app
-    ports:
-      - "${WT_BACKEND_PORT:-5091}:5091"
-    env_file:
-      - ./WT/EMR_Catalog_Backend/.env
-    environment:
-      PORT: "5091"
-      DB_SERVER: mariadb
-      DB_PORT: "3306"
-    volumes:
-      - ./WT/EMR_Catalog_Backend:/app
-    command: ["npm", "run", "dev"]
-    depends_on:
-      mariadb:
-        condition: service_healthy
+  # The WT backend is dc-backend: it also publishes WT_BACKEND_PORT.
 
   wt-web:
     <<: [*node, *host-aliases]
@@ -371,7 +358,7 @@ services:
     volumes:
       - ./WT/Workers_tab_web:/app
     command: ["npm", "run", "dev"]
-    depends_on: [wt-backend]
+    depends_on: [dc-backend]
 
 networks:
   emr:

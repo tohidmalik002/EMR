@@ -21,10 +21,9 @@ This replaces `./start-all.sh`, which started half the stack as host processes.
 | `emr-frontend` | http://localhost:3001 | new EMR (Basecamp) |
 | `emr-backend` | http://localhost:8000 | new EMR API (`emr_node`) |
 | `dc-web` | http://localhost:3002 | Digital catalog |
-| `dc-backend` | http://localhost:5001 | Catalog API (DC) |
+| `dc-backend` | http://localhost:5001, http://localhost:5091 | Catalog API (DC and WT — one backend on `dc_catalog_multidb`) |
 | `pd` | http://localhost:3003 | Product Development frontend |
 | `wt-web` | http://localhost:3004 | Workers Tab |
-| `wt-backend` | http://localhost:5091 | Catalog API (WT) |
 | `pos-web` | http://localhost:3006 | POS |
 | `pos-backend` | http://localhost:5003 | Catalog API (POS) |
 | `mariadb` | localhost:3308 | `demo_site` — shared by Frappe *and* all three catalog backends |
@@ -234,7 +233,7 @@ database:
 | `frappe` bench mount | all 9 apps and `demo.localhost` visible; `env/` volume writable |
 | `frappe` venv + requirements | built from scratch in the container; **all 9 bench apps' python deps installed** under Python 3.14 |
 | `frappe` bench CLI | `bench --site demo.localhost version` lists all 9 apps with branches, incl. the disk-only `emr_sso` |
-| `pos-backend`, `wt-backend` | reach `mariadb`, authenticate, boot on 5003 / 5091 |
+| `pos-backend` | reaches `mariadb`, authenticates, boots on 5003 |
 | All 12 images (11 apps + `frappe`) | build clean |
 
 Not yet exercised end-to-end, because it needs the ~4.7GB database loaded and the
