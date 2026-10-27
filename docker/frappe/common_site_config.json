@@ -1,6 +1,7 @@
 {
   "allow_cors": "*",
   "background_workers": 1,
+  "chromium_start_timeout": 15,
   "db_host": "mariadb",
   "db_port": 3306,
   "default_site": "demo.localhost",
